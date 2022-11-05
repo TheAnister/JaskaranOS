@@ -19,3 +19,6 @@ To publish your own command using [this form](https://forms.gle/E51v22UuDgpYzEkU
 For more python projects, be sure to visit us on our site: [JaskaranPython](https://jaskaranpython.glitch.me)
 
 Here is our backup-site: [PyJaskaran](https://TheAnister.github.io)
+
+# Statistics
+This program is no easy feat. It took two weeks before the first update was ready to be released, with four hours a day being dedicated to finishing this program. Now that it has been completed, the main contributor (Jaskaran) is dedicating all his efforts into making this the best Python OS yet.
