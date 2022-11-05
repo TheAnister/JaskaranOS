@@ -1,8 +1,9 @@
 ## Defaults
 short = False
-
 ## Functions
+print("Loading... (this process may take up to 10 seconds without boot)")
 
+print("Creating functions..")
 def webpageViewer():
     try:
         import os
@@ -15,6 +16,7 @@ def webpageViewer():
         from tkinter import simpledialog
         import getpass
         import asyncio
+        
     except:
         print("Error occured. Cannot access webpage-viewer because following modules need to be installed (via 'pip install (modulename)'): os, webbrowser, sys, time, bs4, requests, tkinter, getpass (used to identify username to write files to specific user), asyncio")
         
@@ -44,9 +46,11 @@ def webpageViewer():
         website = input("> ")
         webbrowser.open(str(website))
         
-
+print("Done!")
+print("Importing modules...")
 ## modules
 import os
+import sys
 try:
     from time import *
 except:
@@ -107,9 +111,11 @@ except:
                 print("Error Cannot exit! Timing process out, please wait!")
             while True:
                 print("Error Cannot exit! Timing process out, please wait!")
+print("Done!")
 os.system("cls" or "clear")
 print("\n\n\n\n\n\n\n\n\n")
 ## functions
+print("Defining more functions..")
 def listToString(s):
     for i in s:
         print(i,end="\n")
@@ -120,6 +126,39 @@ def ping(host):
         print(Fore.GREEN + host + " is up!" + Fore.BLACK)
     else:
       print (Fore.RED + host, "is down!" + Fore.BLACK)
+      
+print("Done!")     
+# Loading
+print("Checking boot...")
+if os.path.exists("C://JaskaranOS/boot") == True:
+    import itertools
+    import threading
+    import time
+    import sys
+    print("\n\n\n\n\n\n\n\n\n\n\n\nBooting, please wait!")
+
+    done = False
+
+    def animate():
+        for c in itertools.cycle(['|', '/', '-', '\\']):
+            if done:
+                break
+            sys.stdout.write('\r ' + c)
+            sys.stdout.flush()
+            time.sleep(0.1)
+        sys.stdout.write('\rDone!\n\n\n\n     ')
+
+    t = threading.Thread(target=animate)
+    t.start()
+    sys.stdout.flush()
+    sleep(3)
+    done = True
+else:
+    sleep(1)
+
+
+
+sleep(1)
 #if firstuser
 try:
     if os.path.exists("C:\JaskaranOS") == True:
@@ -132,35 +171,49 @@ try:
 except:
     print(Fore.RED + "Cannot access C:\ Drive. Please ensure that you have access to it in order to use commands such as "+ Fore.BLUE + "get" + Fore.RED + "." + Fore.RESET)
 
-## Password login/creator
 
+existss = "0"
+## Password login/creator
+sleep(3)
 try:    
     if firstuser == "true":
         print(Fore.CYAN + "Welcome to JaskaranOS! This is a command-based operating system. For help on commands, please type in: 'help' in the command line!\nThis OS has been tested on a Windows Machine. It will soon be able to be run on it's own computer" + Fore.RESET)
-        print("\n Please set a password below!")
+        print("\n     Please set a password below!")
         password = input("> ")
-        f = open("C://JaskaranOS/password.txt", "w")
-        f.write(str(password))
-        f.close
-        print("Successfully set password!")
+        with open('C://JaskaranOS/password.txt', 'w') as f:
+            f.write(str(password))
+        print("Successfully set password!\n")
+        boot = input("Would you like to have a boot screen(this may take up to 10 seconds to load the os but is a safer option). Yes/no\n> ")
+        if boot == "yes":
+            os.mkdir("C://JaskaranOS/boot")
+            print("Done! You can switch your option by using command 'boot'!\n\n")
     else:
-        print("\nPlease enter your password!")
+    
+        print("\n     Please enter your password!")
 
         f = open("C://JaskaranOS/password.txt", "r")
         urpass = str(f.read())
-        x = "0"
-        while x == "0":
+        x = 0
+        while x < 3:
             password = input("> ")
             if str(password) == urpass:
                 print("Succesfully authorised user.")
-                x = "1"
+                x = 10
+                break
             else:
                 print("Error: Invalid password.")
+                x += 1
+        else:
+            print("\nUh oh! The password you typed was incorrect 3 times!")
+            sleep(5)
+            print("Please try again later!")
+            exit()
         
         f.close()
-
+        
 except:
-    print("") ## C:// unaccessible or not working, can't store data
+    password = input("\n Error with Password Manager. Possible solutions: allow access to C-DRIVE to save passwords. Meanwhile, please type in a temp password below\n> ") ## C:// unaccessible or not working, can't store data
+
 
 print("Type 'help' for commands!\n\n")
 
@@ -183,9 +236,12 @@ while True:
         print("download (url) - Downloads and installs a URL.")
         print("password (new pass) - Change your password")
         print("current pass - View your current password")
+        print("boot - Change your boot options(enable/disable it)")
+        print("credits - Opens up the credits pages.")
+        print(Back.RESET)
 
  # Echo
-    elif a[0:5] == "echo ":
+    elif a[0:5] == "echo " or a[0:5] == "print":
         echo = a[5:]
         print(echo)
 
@@ -305,16 +361,12 @@ while True:
         
         
     elif a == "password" or a == "pass":
-        try:
-            import getpass
-        except:
-            print(Fore.RED + "Error. 'Getpass' Module required." + Fore.RESET)
-        try:
-            getpass.getpass()
-        except:
-            print(Fore.RED + "Error! Incorrect password?")
-        else:
-            print('Password success!')
+        with open('C://JaskaranOS/password.txt', 'r') as f:
+            try:
+                lines = f.readlines()
+                print(lines)
+            except:
+                print("Invalid operation. Password file corrupt.")
             
     elif a == "username" or a == "user":
         try:
@@ -386,7 +438,48 @@ while True:
             print(Fore.RED+"Invalid password."+Fore.RESET)
         f.close()
         
+    elif a == "boot":
+        if os.path.exists("C://JaskaranOS/boot"):
+            # Boot exists. Disable it!
+            # must be empty directory or won't delete
+            os.rmdir("C://JaskaranOS/boot")
+            print("\nDisabled boot. Please restart for the changes to take effect.\n")
+        else:
+            # Boot doesn't exist. Enable it!
+            os.mkdir("C://JaskaranOS/boot")
+            print("\nEnabled boot. Please restart for the changes to take effect.\n")
     
+    elif a == "":
+        print("Haha. Nice joke. Thought you could outsmart me by typing in nothing? Well I got news for ya. It didn't work! Now it's time for some... malicious deeds...")
+        sleep(3)
+        print("5")
+        sleep(1)
+        print("4")
+        sleep(1)
+        print("3")
+        sleep(1)
+        print("2")
+        sleep(1)
+        print("1")
+        sleep(1)
+        
+    elif a == "credits":
+        print("Thank you for taking your time to have a look at the credits.")
+        try:
+            import webbrowser
+        except:
+            print("Uh oh! Module  Webbrowser cannot be imported! Please install it")
+        sleep(1)
+        print("This operating system was created by Jaskaran. We are now opening the official link for JaskaranPython so that you can view more python projects. We are then going to be opening the github page for JaskaranOS, so you can see the contributors.")
+        sleep(5)
+        webbrowser.open("https://jaskaranpython.glitch.me")
+        sleep(2)
+        webbrowser.open("https://github.com/TheAnister/JaskaranOS")
+        
+    elif a == "pyexe":
+        print("Running python 'auto-py-to-exe'...")
+        os.system("auto-py-to-exe")
+        
     else:
         print(Fore.RED + "Unknown command. Please type in 'unknown command' for more information." + Fore.RESET)
         
