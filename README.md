@@ -6,7 +6,7 @@ JaskaranOS (a.k.a JOS) is a command-based operating system that was made on Pyth
 
 # Adding your own commands
 ## Locally
-To add in your own commands, you first need to download the latest version of JaskaranOS [here](https://github.com/TheAnister/JaskaranOS/releases/). Inside the `source code.zip` file, you will find a file named `main.py`. Extract that file to any location you want, and then open it up using a text editor. Scroll all the way down, and then just before the last ```else```, write your own command using this format:
+To add in your own commands, you first need to download the latest version of JaskaranOS source code [here](https://github.com/TheAnister/JaskaranOS/releases/). Inside the `source code.zip` file, you will find a file named `main.py`. Extract that file to any location you want, and then open it up using a text editor. Scroll all the way down, and then just before the last ```else```, write your own command using this format:
 ```
   elif a == "test":
     print("This is just a test.")
@@ -20,6 +20,8 @@ If your program uses input taken from when the user types something in, please u
 ## Publishing your own commands
 To publish your own command using [this form](https://forms.gle/E51v22UuDgpYzEkU9). The form will be checked at least once a month, and if your response gets approved, it will be added to the latest version of JaskaranOS.
 
+## Compiling your program
+If you would like to compile your program into a functioning .exe file, ensure that you have all the correct modules installed, then simply type "exe" into JaskaranOS and an automatic python-to-exe converter will pop up. 
 # More Python
 For more python projects, be sure to visit us on our site: [JaskaranPython](https://jaskaranpython.glitch.me)
 
