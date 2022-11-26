@@ -45,7 +45,58 @@ def webpageViewer():
         print("Excellent! What website would you like to visit?")
         website = input("> ")
         webbrowser.open(str(website))
+def email():
+    try:
+        import smtplib, ssl
+    except:
+        os.system("pip install smtplib")
+        os.system("pip install ssl")
+        import smtplib, sll
+    port = 587  # For starttls
+    smtp_server = "smtp.gmail.com"
+    if os.path.isfile("C://JaskaranOS/email/email.txt") == True:
+        with open('C://JaskaranOS/email/email.txt') as f:
+            sender_email = f.readlines()
+    else:
+        sender_email = str(input("Please type in your email...\n> "))
+        os.mkdir("C://JaskaranOS/email")
+        f = open("C://JaskaranOS/email/email.txt", "x")
+        f = open("C://JaskaranOS/email/email.txt", "w")
+        f.write(sender_email)
+        f.close()
         
+    receiver_email = str(input("Please type in the receivers email...\n> "))
+    if os.path.isfile("C://JaskaranOS/email/password.txt.aes") == True:
+        passwordd = "a9AS8HAOSIUTHG4IS7YFGOASFAUPQ39Y08haiofisjfauoio9YU9do8gHODifhyf98ofihfaofhyy*Y*F&S*YS&Y87GF87fG8g*&tgf*"
+        pyAesCrypt.decryptFile("C://JaskaranOS/email/password.txt.aes", "dataout.txt", passwordd)
+        with open('dataout.txt') as f:
+            password = f.readlines()
+        os.remove('dataout.txt')
+    else:
+        
+        password = str(input("Type your password for your email... (Note, if you use 2FA, you need to make an app password here: https://bit.ly/google-app-passwords )\n> "))
+        f = open("C://JaskaranOS/email/password.txt", "w")
+        f.write(password)
+        f.close()
+        passwordd = "a9AS8HAOSIUTHG4IS7YFGOASFAUPQ39Y08haiofisjfauoio9YU9do8gHODifhyf98ofihfaofhyy*Y*F&S*YS&Y87GF87fG8g*&tgf*"
+        pyAesCrypt.encryptFile("C://JaskaranOS/email/password.txt", "C://JaskaranOS/email/password.txt.aes", passwordd)
+        
+        
+    message = str(input("Please type in the message contents (Use 'Subject: (SUBJECT)' for the subject).\n> "))
+    try:
+        print("Sending email...")
+        context = ssl.create_default_context()
+        with smtplib.SMTP(smtp_server, port) as server:
+            server.ehlo() 
+            server.starttls(context=context)
+            server.ehlo() 
+            server.login(sender_email, password)
+            server.sendmail(sender_email, receiver_email, message)
+        print("Email successfully sent.")
+    except Exception as e:
+        print("Error whilst sending email.")
+        sleep(1)
+        print(e)
 print("Done!")
 print("Importing modules...")
 ## modules
@@ -64,18 +115,23 @@ except:
     sleep(5)
     os.system('python -m pip install functools')
     exit()
-    
+
+if os.path.isdir("C://JaskaranOS/configuration/incorrect-password") == True:
+    incorrectcmd = 1
+else:
+    incorrectcmd = 0
 try:
     import urllib.request
     import requests
     import platform
     import subprocess
+    import pyAesCrypt
+    import getpass
 
 except:
-    print("We could not import the following modules: 'urllib', 'requests', 'platform', 'subprocess'. Please install them to continue. Auto-installing it in 5 seconds...")
+    print("We could not import the following modules: 'getpass', 'urllib', 'requests', 'platform', 'subprocess' and/or 'pyAesCrypt'. Please install them to continue. Auto-installing it in 5 seconds...")
     sleep(5)
-    sleep(5)
-    os.system('python -m pip install urllib requests platform subprocess')
+    os.system('python -m pip install pyAesCrypt getpassw urllib requests platform subprocess')
     exit()
 try:    
     from colorama import Fore, Back, Style
@@ -87,7 +143,7 @@ except:
     os.system('python -m pip install colorama termcolor')
     exit()
 try:
-    import datetime
+    from datetime import datetime
 except:
     print("Error installing datetime. Fixing issues... (Fix 1/2)")
     try:
@@ -135,41 +191,63 @@ if os.path.exists("C://JaskaranOS/boot") == True:
     import threading
     import time
     import sys
-    print("\n\n\n\n\n\n\n\n\n\n\n\nBooting, please wait!")
-
+    print("Booting...")
     done = False
-
+    #here is the animation
     def animate():
-        for c in itertools.cycle(['|', '/', '-', '\\']):
+        for c in itertools.cycle(['|', '/', '-', '\\','|', '/', '-', '\\','|', '/', '-', '\\']):
             if done:
                 break
             sys.stdout.write('\r ' + c)
             sys.stdout.flush()
-            time.sleep(0.1)
-        sys.stdout.write('\rDone!\n\n\n\n     ')
+            sleep(0.1)
+        sys.stdout.write('\rDone!     \n')
 
     t = threading.Thread(target=animate)
     t.start()
-    sys.stdout.flush()
+
+    try:
+        passwordd = "vTWMDsvbAnlFmFNIRRML"
+        pyAesCrypt.decryptFile("C://JaskaranOS/encrypted-password.txt.aes", "dataout.txt", passwordd)
+    except Exception as e:
+        print("Error whilst decrypting/accessing encrypted file.")
+        print(e)
+    with open('dataout.txt') as f:
+        urpass = f.read()
+    os.remove("dataout.txt")
     sleep(3)
     done = True
 else:
-    sleep(1)
+    print("Please wait, loading!")
+    print("decrypting password...")
+    try:
+        passwordd = "vTWMDsvbAnlFmFNIRRML"
+        pyAesCrypt.decryptFile("C://JaskaranOS/encrypted-password.txt.aes", "dataout.txt", passwordd)
+    except Exception as e:
+        print("Error whilst decrypting/accessing encrypted file.")
+        print(e)
+    print("done!\nreading file...")
+    with open("dataout.txt") as f:
+        urpass = f.read()
+    print("done!\ndeleted decrypted file...")
+    os.remove("dataout.txt")
+    print("done!\nloading password manager...")
+    sleep(0.5)
 
+import socket
 
-
-sleep(1)
+sleep(0.5)
 #if firstuser
 try:
     if os.path.exists("C:\JaskaranOS") == True:
         firstuser = "false"
-        print(Fore.GREEN + "Welcome back to JOS - Jaskaran's Operating System\n" + Fore.RESET)
+        print(Fore.GREEN + "\n              Welcome back to JOS - Jaskaran's Operating System\n" + Fore.RESET)
     else:
         print("")
         os.mkdir("C:\JaskaranOS")
         firstuser = "true"
 except:
-    print(Fore.RED + "Cannot access C:\ Drive. Please ensure that you have access to it in order to use commands such as "+ Fore.BLUE + "get" + Fore.RED + "." + Fore.RESET)
+    print(Fore.RED + "Cannot access C:\ Drive. Please ensure that you have access to it in order to use commands such as "+ Fore.BLUE + "write" + Fore.RED + "." + Fore.RESET)
 
 
 existss = "0"
@@ -177,23 +255,30 @@ existss = "0"
 sleep(3)
 try:    
     if firstuser == "true":
-        print(Fore.CYAN + "Welcome to JaskaranOS! This is a command-based operating system. For help on commands, please type in: 'help' in the command line!\nThis OS has been tested on a Windows Machine. It will soon be able to be run on it's own computer" + Fore.RESET)
+        print(Fore.CYAN + "\n                Welcome to JaskaranOS! This is a command-based operating system. For help on commands, please type in: 'help' in the command line!\nThis OS has been tested on a Windows Machine. It will soon be able to be run on it's own computer" + Fore.RESET)
         print("\n     Please set a password below!")
         password = input("> ")
         with open('C://JaskaranOS/password.txt', 'w') as f:
             f.write(str(password))
+            
         print("Successfully set password!\n")
+        ## encrypt password file
+        import pyAesCrypt
+        passwordd = "vTWMDsvbAnlFmFNIRRML"
+        print("Please wait whilst we encrypt your password... (dont turn off ur pc!!)")
+        pyAesCrypt.encryptFile("C://JaskaranOS/password.txt", "C://JaskaranOS/encrypted-password.txt.aes", passwordd)
+        sleep(2)
+        os.remove("C://JaskaranOS/password.txt")
+        print("Done.\n")
         boot = input("Would you like to have a boot screen(this may take up to 10 seconds to load the os but is a safer option). Yes/no\n> ")
         if boot == "yes":
             os.mkdir("C://JaskaranOS/boot")
             print("Done! You can switch your option by using command 'boot'!\n\n")
     else:
-    
-        print("\n     Please enter your password!")
 
-        f = open("C://JaskaranOS/password.txt", "r")
-        urpass = str(f.read())
+        print("\n     Please enter your password!")
         x = 0
+        rx = 1
         while x < 3:
             password = input("> ")
             if str(password) == urpass:
@@ -201,25 +286,26 @@ try:
                 x = 10
                 break
             else:
-                print("Error: Invalid password.")
+                print("Error: Invalid password. Attempt "+ str(rx) + "/3.")
                 x += 1
+                rx += 1
         else:
             print("\nUh oh! The password you typed was incorrect 3 times!")
-            sleep(5)
+            sleep(2)
             print("Please try again later!")
             exit()
         
         f.close()
         
-except:
-    password = input("\n Error with Password Manager. Possible solutions: allow access to C-DRIVE to save passwords. Meanwhile, please type in a temp password below\n> ") ## C:// unaccessible or not working, can't store data
-
-
+except Exception as e:
+    password = input("\n Error with Password Manager. Possible solutions: allow access to C-DRIVE to save passwords, remove JaskaranOS folder from CDrive (may have corrupted after update). Meanwhile, please type in a temp password below\n> ") ## C:// unaccessible or not working, can't store data
+    print(e)
 print("Type 'help' for commands!\n\n")
 
-# INPUT
+user = getpass.getuser()
 while True:
-    a = input("sudo@root > ")
+    
+    a = input(user+"@"+socket.gethostname()+" > ")
 
 # now the processing!
 
@@ -234,10 +320,13 @@ while True:
         print("cmd (input) - Used windows CMD to run advanced commands.")
         print("pip install (input) - Installs python modules using PIP.")
         print("download (url) - Downloads and installs a URL.")
-        print("password (new pass) - Change your password")
-        print("current pass - View your current password")
         print("boot - Change your boot options(enable/disable it)")
         print("credits - Opens up the credits pages.")
+        print("email - Opens up the JOS Gmail E-Mail client")
+        print("translate - Opens up the JOS Translator, based on Google Translate")
+        print("sudo - Opens up sudo configuration.")
+        print("configure - Opens up the JOS configuration.")
+        print("time - Gets current time.")
         print(Back.RESET)
 
  # Echo
@@ -419,25 +508,7 @@ while True:
     elif a == "lol" or a == "xd" or a == "xD" or a == "XD":
         print("What's so funny?")
         
-    elif a == "current pass":
-        f = open("C://JaskaranOS/password.txt", "r")
-        print("Your current password is "+f.read())
-        f.close()
-        
-    elif a[0:9] == "password ":
-        newpass = a[9:]
-        print("You are about to change your password to '"+newpass+"'! Please input your current password to confirm.")
-        currentpass = input("> ")
-        f = open("C://JaskaranOS/password.txt", "r");
-        if str(currentpass) == (f.read()):
-            f = open("C://JaskaranOS/password.txt", "w")
-            f.write(str(newpass))
-            f.close
-            print("Successfully changed password.\n")
-        else:
-            print(Fore.RED+"Invalid password."+Fore.RESET)
-        f.close()
-        
+
     elif a == "boot":
         if os.path.exists("C://JaskaranOS/boot"):
             # Boot exists. Disable it!
@@ -450,18 +521,7 @@ while True:
             print("\nEnabled boot. Please restart for the changes to take effect.\n")
     
     elif a == "":
-        print("Haha. Nice joke. Thought you could outsmart me by typing in nothing? Well I got news for ya. It didn't work! Now it's time for some... malicious deeds...")
-        sleep(3)
-        print("5")
-        sleep(1)
-        print("4")
-        sleep(1)
-        print("3")
-        sleep(1)
-        print("2")
-        sleep(1)
-        print("1")
-        sleep(1)
+        print("Please input something to process.")
         
     elif a == "credits":
         print("Thank you for taking your time to have a look at the credits.")
@@ -476,11 +536,99 @@ while True:
         sleep(2)
         webbrowser.open("https://github.com/TheAnister/JaskaranOS")
         
-    elif a == "pyexe":
+    elif a == "pyexe" or a == "exe":
         print("Running python 'auto-py-to-exe'...")
         os.system("auto-py-to-exe")
+    
+    elif a == "l bozo" or a == "l":
+        print(Fore.RED + "L bozo." + Fore.RESET)
+    
+    elif a == "email":
+        email()
+    
+    elif a == "translate":
+        try:
+            from googletrans import Translator
+            from pprint import pprint
+        except:
+            os.system("pip install googletrans==3.1.0a0")
+            os.system("pip install pprint")
+            from googletrans import Translator
+            from pprint import pprint
+            
+        translator = Translator()
+        tt = input("What would you like to translate into English?\n> ")
+        src = input("Please enter the language code (e.g en = english, de = german, etc.)\n> ")
+        try:
+            translation = translator.translate(str(tt), src=str(src))
+            print(f"{translation.origin} ({translation.src}) --> {translation.text} ({translation.dest})")
+        except Exception as e:
+            print("Error whilst translating.")
+            sleep(1)
+            print(e)
+    elif a == "sudo":
+        print("JOS sudo 1.0")
+        print("available sudo command:\nsudo apt")
+    
+    elif a == "sudo apt":
+        print("JOS sudo apt 1.0")
+        print("apt has super cow powers")
+        print("available sudo apt commands:\nsudo apt install\nsudo apt remove\nsudo apt update\nsudo apt upgrade")
+    
+    elif a == "sudo apt install":
+        print("JOS sudo apt install 1.0")
+        print("please specify what to install :)")
+    elif a == "sudo apt remove":
+        print("JOS sudo apt remove 1.0")
+        print("please specify what to remove :)")
+    elif a == "sudo apt update":
+        print("JOS sudo apt update 1.0")
+        print("please specify what to update :)")
+    elif a == "sudo apt upgrade":
+        input("Are you sure you would like to upgrade to the latest JOS? Press enter to proceed.")
+        import webbrowser
+        webbrowser.open("https://github.com/TheAnister/JaskaranOS")
+    
+    elif a[0:17] == "sudo apt install ":
+        print("JOS sudo apt install 1.0")
+        print("package unavailable :)")
+    
+    elif a[0:16] == "sudo apt remove ":
+        print("JOS sudo apt remove 1.0")
+        print("package does not exist, is it installed?")
+        
+    elif a[0:16] == "sudo apt update ":
+        print("JOS sudo apt update 1.0")
+        print("error: specified package not found, or already updated.")
+    
+    elif a == "configure":
+        print("configuration of JOS")
+        print("configure incorrect-command - when command not found, search query on google.")
+    
+    elif a == "configure incorrect-command":
+        if incorrectcmd == 1: # if enabled
+            incorrectcmd = 0
+            os.rmdir("C://JaskaranOS/configuration/incorrect-password")
+            print("now disabled.")
+        else:
+            incorrectcmd = 1
+            os.mkdir("C://JaskaranOS/configuration/")
+            os.mkdir("C://JaskaranOS/configuration/incorrect-password")
+            print("now enabled.")
+        print("done.")
+    
+    elif a == "time":
+        now = datetime.now()
+
+        current_time = now.strftime("%H:%M:%S")
+        print("Current Time:", current_time)
+        
         
     else:
-        print(Fore.RED + "Unknown command. Please type in 'unknown command' for more information." + Fore.RESET)
+        if incorrectcmd == 1:
+            import webbrowser
+            webbrowser.open("https://www.google.com/search?q="+str(a)+"&oq=google&aqs=JOS")
+        else:
+            print(Fore.RED + "Unknown command. Please type in 'unknown command' for more information." + Fore.RESET)
         
     
