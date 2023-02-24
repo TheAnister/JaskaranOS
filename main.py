@@ -1,3 +1,61 @@
+print("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nJaskaran Operating System\n")
+try:
+    from time import *
+except:
+    print("Error. We need the time module in order for the Operating System to load.. please install it ASAP via CMD in the boot options")
+print("Boot 2.0 by Jaskaran, for Faster Boot\n")
+
+start = input("BOOT OPTIONS: \n(enter) - Boot the machine\n'options' - View boot options\n'cmd' - Opens CMD line\n> ")
+if start == "options" or start == "option":
+    print("BOOT options for JOS..")
+    print("1 - Reset JOS\n2 - Coming soon\n3 - Coming soon")
+    option = input("> ")
+    if option == "1":
+        print("Are you sure you want to reset JOS? This will delete all files and do a complete factory reset for JOS. (y/n)")
+        if input("> ") == "y":
+            print("Importing modules..")
+            try:
+                import shutil
+                print("Successfully imported modules.\nAttempting to do a factory reset...")
+                try:
+                    
+                    shutil.rmtree(r'C:\JaskaranOS')
+                    print("Success. Please wait whilst we load up your fresh new version of JOS...")
+                    sleep(5)
+                except Expection as e:
+                    print("Error doing factory reset. Error message:")
+                    print(e)
+                    sleep(5)
+            except:
+                print("Error importing shutil. Attempting to resolve..")
+                try:
+                    import os
+                    os.system("pip install shutil")
+                    print("Resolved issue.. deleting JOS..")
+                    try:
+                        shutil.rmtree(r'C:\JaskaranOS')
+                        print("Success. Please wait whilst we load up your fresh new version of JOS...")
+                        sleep(5)
+                    except Expection as e:
+                        print("Error doing factory reset. Error message:")
+                        print(e)
+                        sleep(5)
+                except:
+                    print("Attempt to resolve failed...")
+                    sleep(2)
+        else:
+            print("Aborted. Contuining to operating system..")
+            sleep(2)
+elif start == "cmd":
+    print("\n\nCMD Emulator")
+    try:
+        import os
+    except:
+        print("Error importing module 'os'.")
+    while True:
+        os.system(input("> "))
+
+print("Loading Boot...")
 ## Defaults
 short = False
 ## Functions
@@ -19,7 +77,7 @@ def webpageViewer():
         
     except:
         print("Error occured. Cannot access webpage-viewer because following modules need to be installed (via 'pip install (modulename)'): os, webbrowser, sys, time, bs4, requests, tkinter, getpass (used to identify username to write files to specific user), asyncio")
-        
+        exit()
     print("Successfully imported modules. \n")
     print("Welcome to JOS's WEBVIEWER - A simple tool used to browse or search the internet!")
     print("Would you like to search (search) or open up a website (website)?")
@@ -120,19 +178,42 @@ if os.path.isdir("C://JaskaranOS/configuration/incorrect-password") == True:
     incorrectcmd = 1
 else:
     incorrectcmd = 0
+
 try:
     import urllib.request
-    import requests
-    import platform
-    import subprocess
-    import pyAesCrypt
-    import getpass
-
 except:
-    print("We could not import the following modules: 'getpass', 'urllib', 'requests', 'platform', 'subprocess' and/or 'pyAesCrypt'. Please install them to continue. Auto-installing it in 5 seconds...")
-    sleep(5)
-    os.system('python -m pip install pyAesCrypt getpassw urllib requests platform subprocess')
-    exit()
+    os.system("pip install urllib.request")
+    import urllib.request
+try:
+    import requests
+except:
+    os.system("pip install requests")
+    import requests
+try:
+    import platform
+except:
+    os.system("pip install platform")
+    import platform
+
+try:
+    import subprocess
+except:
+    os.system("pip install subprocess")
+    import subprocess
+
+try:
+    import pyAesCrypt
+except:
+    os.system("pip install pyAesCrypt")
+    import pyAesCrypt
+
+try:
+    import getpass
+except:
+    os.system("pip install getpass")
+    import getpass
+    
+
 try:    
     from colorama import Fore, Back, Style
     from termcolor import colored
@@ -145,28 +226,8 @@ except:
 try:
     from datetime import datetime
 except:
-    print("Error installing datetime. Fixing issues... (Fix 1/2)")
-    try:
-        os.system('python -m pip install datetime')
-    except:
-        ## hacker.!!!.
-        print("Error installing module (module already there / corrupt?). Fixing issues... (Fix 2/2)")
-        sleep(5)
-        print(Fore.RED + "Error occured! This was not meant to happen! You have corrupted the system! Automatically exiting..." + Fore.RESET)
-        try:
-            exit()
-        except:
-            print(Fore.RED + "ERROR OCCURED! CANNOT EXIT!")
-            while True:
-                print("Error Cannot exit! Timing process out, please wait!")
-            while True:
-                print("Error Cannot exit! Timing process out, please wait!")
-            while True:
-                print("Error Cannot exit! Timing process out, please wait!")
-            while True:
-                print("Error Cannot exit! Timing process out, please wait!")
-            while True:
-                print("Error Cannot exit! Timing process out, please wait!")
+    os.system("pip install datetime")
+    from datetime import datetime
 print("Done!")
 os.system("cls" or "clear")
 print("\n\n\n\n\n\n\n\n\n")
@@ -186,12 +247,22 @@ def ping(host):
 print("Done!")     
 # Loading
 print("Checking boot...")
-if os.path.exists("C://JaskaranOS/boot") == True:
-    import itertools
-    import threading
-    import time
-    import sys
-    print("Booting...")
+if os.path.exists("C://JaskaranOS/") and os.path.exists("C://JaskaranOS/boot") == True:
+    try:
+        print("Importing boot modules..")
+        import itertools
+        import threading
+        import time
+    except:
+        print("Error importing boot modules. Trying to fix...")
+        os.system("pip install itertools")
+        os.system("pip install threading")
+        os.system("pip install time")
+        import itertools
+        import threading
+        import time
+        
+    print("\n\nBooting...")
     done = False
     #here is the animation
     def animate():
@@ -215,32 +286,36 @@ if os.path.exists("C://JaskaranOS/boot") == True:
     with open('dataout.txt') as f:
         urpass = f.read()
     os.remove("dataout.txt")
-    sleep(3)
+    sleep(1)
     done = True
 else:
-    print("Please wait, loading!")
-    print("decrypting password...")
-    try:
-        passwordd = "vTWMDsvbAnlFmFNIRRML"
-        pyAesCrypt.decryptFile("C://JaskaranOS/encrypted-password.txt.aes", "dataout.txt", passwordd)
-    except Exception as e:
-        print("Error whilst decrypting/accessing encrypted file.")
-        print(e)
-    print("done!\nreading file...")
-    with open("dataout.txt") as f:
-        urpass = f.read()
-    print("done!\ndeleted decrypted file...")
-    os.remove("dataout.txt")
-    print("done!\nloading password manager...")
-    sleep(0.5)
+    if os.path.exists("C://JaskaranOS/") == True:
+        print("Please wait, loading!")
+        print("decrypting password...")
+        try:
+            passwordd = "vTWMDsvbAnlFmFNIRRML"
+            pyAesCrypt.decryptFile("C://JaskaranOS/encrypted-password.txt.aes", "dataout.txt", passwordd)
+        except Exception as e:
+            print("Error whilst decrypting/accessing encrypted file.")
+            print(e)
+        print("done!\nreading file...")
+        try:
+            with open("dataout.txt") as f:
+                urpass = f.read()
+        except:
+            print("An error occured! This may be due to a corrupted password. One possibility of this error was leaving set-up whilst you hadn't encrypted/chosen the password!")
+        print("done!\ndeleted decrypted file...")
+        os.remove("dataout.txt")
+        print("done!\nloading password manager...")
+        sleep(0.7)
 
 import socket
-
-sleep(0.5)
 #if firstuser
 try:
     if os.path.exists("C:\JaskaranOS") == True:
         firstuser = "false"
+        sleep(1)
+        print("Opened popup-window...")
         print(Fore.GREEN + "\n              Welcome back to JOS - Jaskaran's Operating System\n" + Fore.RESET)
     else:
         print("")
@@ -252,18 +327,31 @@ except:
 
 existss = "0"
 ## Password login/creator
-sleep(3)
+sleep(1)
 try:    
     if firstuser == "true":
-        print(Fore.CYAN + "\n                Welcome to JaskaranOS! This is a command-based operating system. For help on commands, please type in: 'help' in the command line!\nThis OS has been tested on a Windows Machine. It will soon be able to be run on it's own computer" + Fore.RESET)
-        print("\n     Please set a password below!")
+        print("Popup-window..")
+        print(Fore.GREEN + "Welcome to JaskaranOS! This is a part-command and part-gui based operating system. For help on commands, please type in: 'help' in the command line!\nPlease do not exit/turn your computer off during setup, or this will corrupt the file. In case your file is corrupted, make sure to do a factory reset in the boot options!" + Fore.RESET)
+
+        sleep(5)
+        print("Please input a Password! (Don't worry- the password will be encrypted!)")
+        
         password = input("> ")
+        
+        
+        print("Set password to", str(password))
         with open('C://JaskaranOS/password.txt', 'w') as f:
             f.write(str(password))
             
         print("Successfully set password!\n")
         ## encrypt password file
-        import pyAesCrypt
+        try:
+            import pyAesCrypt
+        except:
+            print("Hold on a second! A module hasn't been installed correctly! Fixing..")
+            os.system("pip install pyAesCrypt")
+            import pyAesCrypt
+            print("There you go!")
         passwordd = "vTWMDsvbAnlFmFNIRRML"
         print("Please wait whilst we encrypt your password... (dont turn off ur pc!!)")
         pyAesCrypt.encryptFile("C://JaskaranOS/password.txt", "C://JaskaranOS/encrypted-password.txt.aes", passwordd)
@@ -275,7 +363,7 @@ try:
             os.mkdir("C://JaskaranOS/boot")
             print("Done! You can switch your option by using command 'boot'!\n\n")
     else:
-
+        
         print("\n     Please enter your password!")
         x = 0
         rx = 1
@@ -305,7 +393,7 @@ print("Type 'help' for commands!\n\n")
 user = getpass.getuser()
 while True:
     
-    a = input(user+"@"+socket.gethostname()+" > ")
+    a = str(input(user+"@"+socket.gethostname()+" > "))
 
 # now the processing!
 
@@ -327,6 +415,14 @@ while True:
         print("sudo - Opens up sudo configuration.")
         print("configure - Opens up the JOS configuration.")
         print("time - Gets current time.")
+        print("shut down - Shuts down JOS")
+        print("restart - Restarts JOS")
+        print("user - Shows Device Username")
+        print("device - Shows Device Hostname")
+        print("update notes - Shows the latest update notes.")
+        print("ram usage - Shows current RAM usage & total ram")
+        print("cpu usage - Shows current CPU usage")
+        print("speed test - Check your current internet speed.")
         print(Back.RESET)
 
  # Echo
@@ -341,7 +437,7 @@ while True:
             okay = '\n'.join(map(str, (os.listdir(ls))))
             print("Files in", ls+":\n\n\nl"+okay)
         except FileNotFoundError:
-            print("File Not Found!")
+            print("Folder Not Found!")
     
  # Create new textfile
     elif a[0:5] == "text ":
@@ -450,12 +546,14 @@ while True:
         
         
     elif a == "password" or a == "pass":
-        with open('C://JaskaranOS/password.txt', 'r') as f:
             try:
-                lines = f.readlines()
-                print(lines)
-            except:
-                print("Invalid operation. Password file corrupt.")
+                with open('C://JaskaranOS/password.txt', 'r') as f:
+                    lines = f.readlines()
+                    print(lines)
+            except Exception as e:
+                print("Invalid operation. Password file cannot be accessed.")
+                sleep(1)
+                print(e)
             
     elif a == "username" or a == "user":
         try:
@@ -521,7 +619,7 @@ while True:
             print("\nEnabled boot. Please restart for the changes to take effect.\n")
     
     elif a == "":
-        print("Please input something to process.")
+        print(Fore.RED+"Please input something to process."+Fore.RESET)
         
     elif a == "credits":
         print("Thank you for taking your time to have a look at the credits.")
@@ -567,43 +665,47 @@ while True:
             sleep(1)
             print(e)
     elif a == "sudo":
-        print("JOS sudo 1.0")
-        print("available sudo command:\nsudo apt")
+        print("JOS sudo 1.1")
+        print(Fore.GREEN+"available sudo command:\nsudo apt"+Fore.RESET)
     
     elif a == "sudo apt":
-        print("JOS sudo apt 1.0")
+        print("JOS sudo apt 1.1")
         print("apt has super cow powers")
-        print("available sudo apt commands:\nsudo apt install\nsudo apt remove\nsudo apt update\nsudo apt upgrade")
+        print(Fore.GREEN+"available sudo apt commands:\nsudo apt install\nsudo apt remove\nsudo apt update\nsudo apt upgrade"+Fore.RESET)
     
     elif a == "sudo apt install":
-        print("JOS sudo apt install 1.0")
-        print("please specify what to install :)")
+        print("JOS sudo apt install 1.1")
+        print(Fore.RED+"please specify what to install :)"+Fore.RESET)
     elif a == "sudo apt remove":
-        print("JOS sudo apt remove 1.0")
-        print("please specify what to remove :)")
+        print("JOS sudo apt remove 1.1")
+        print(Fore.RED+"please specify what to remove :)"+Fore.RESET)
     elif a == "sudo apt update":
-        print("JOS sudo apt update 1.0")
-        print("please specify what to update :)")
+        print("JOS sudo apt update 1.1")
+        print(Fore.RED+"please specify what package to update :)"+Fore.RESET)
     elif a == "sudo apt upgrade":
-        input("Are you sure you would like to upgrade to the latest JOS? Press enter to proceed.")
+        print(Fore.RED+"Attempting to get latest version of JOS..")
+        sleep(1)
+        print("Error. Attempting manual process..\n")
+        input(Fore.RED+"Are you sure you would like to upgrade to the latest JOS? Press enter to proceed."+Fore.RESET)
         import webbrowser
         webbrowser.open("https://github.com/TheAnister/JaskaranOS")
     
     elif a[0:17] == "sudo apt install ":
-        print("JOS sudo apt install 1.0")
-        print("package unavailable :)")
+        print("JOS sudo apt install 1.1")
+        print(Fore.RED+"package unavailable :)"+Fore.RESET)
     
     elif a[0:16] == "sudo apt remove ":
-        print("JOS sudo apt remove 1.0")
-        print("package does not exist, is it installed?")
+        print("JOS sudo apt remove 1.1")
+        print(Fore.RED+"package does not exist, is it installed?"+Fore.RESET)
         
     elif a[0:16] == "sudo apt update ":
-        print("JOS sudo apt update 1.0")
-        print("error: specified package not found, or already updated.")
+        print("JOS sudo apt update 1.1")
+        print(Fore.RED+"error: specified package not found, or is already updated to latest version."+Fore.RESET)
     
     elif a == "configure":
         print("configuration of JOS")
-        print("configure incorrect-command - when command not found, search query on google.")
+        print(Fore.GREEN+"configure incorrect-command - when command not found, search query on google.")
+        print(Fore.RESET)
     
     elif a == "configure incorrect-command":
         if incorrectcmd == 1: # if enabled
@@ -623,8 +725,170 @@ while True:
         current_time = now.strftime("%H:%M:%S")
         print("Current Time:", current_time)
         
+    elif a == "restart":
+        print("Restarting...")
+        sleep(2)
+        if input("\nWould you also like to restart your computer?\n> ") == "yes":
+            print("Restarting computer... 5 second countdown")
+            sleep(5)
+            os.system("shutdown /r /t 1")
+        print("Shutting down all processes..")
+        sleep(0.2)
+        print("Success\n")
+        os.execl(sys.executable, sys.executable, *sys.argv)
         
+    elif a == "stop" or a == "shutdown" or a == "shut down" or a == "exit":
+        print("Shutting down..")
+        sleep(2)
+        if input("\nWould you also like to shut down your computer?\n> ") == "yes":
+            print("Shutting down your computer... 5 second countdown")
+            sleep(5)
+            os.system("shutdown /s /t 1")
+        print("Shutting down all processes..")
+        sleep(0.2)
+        print("Success\n")
+        exit()
+        
+    elif a == "device":
+        print("Your device name is currently", socket.gethostname())
+    
+    elif a == "disk usage":
+        try:
+            import shutil
+            from hurry.filesize import *
+        except:
+            os.system("pip install shutil")
+            import shutil
+            os.system("pip install hurry.filesize")
+            from hurry.filesize import *
+
+        total, used, free = shutil.disk_usage("/")
+
+        print("Total: "+size(total, system=verbose))
+        print("Used: "+size(used, system=verbose))
+        print("Free: "+size(free, system=verbose))
+        print("\nTotal: "+size(total, system=alternative))
+        print("Used: "+size(int(used), system=alternative))
+        print("Free: "+size(int(free), system=alternative))
+    
+    elif a == "world cup":
+        import webbrowser
+        webbrowser.open("https://www.google.com/search?q=world+cup")
+    
+    elif a == "ur mom" or a == "your mom" or a == "you dad" or a == "ur dad":
+        print("I'd say the same to you, but you don't have one.")
+    
+    elif a == "cpu" or a == "cpu usage":
+        try:      
+            import os
+            import psutil
+        except:
+            print("Cannot get module: psutil. Auto-installing.. please wait..")
+            os.system("pip install psutil")
+            import psutil
+        load1, load5, load15 = psutil.getloadavg()
+        print(load1, load5, load15)
+        cpu_usage = (load15/os.cpu_count()) * 100
+        print("The CPU usage is", str(cpu_usage)+" percent")
+    
+    elif a == "ram" or a == "ram usage":
+        try:
+            import psutil
+        except:
+            print("Error getting module: psutil. Auto-installing.. please wait..")
+            os.system("pip install psutil")
+            import psutil
+        try:
+            rampercent = psutil.virtual_memory()[2]
+            ramused = psutil.virtual_memory()[3]/1000000000
+            ramtotal1 = int(ramused)/int(rampercent)
+            ramtotal = ramtotal1*100
+            winram1 = ramtotal/1000000000
+            winram = winram1*1074000000
+        except:
+            print("error, psutil not working?")
+        if ramtotal < ramused:
+            print("Error! RAM being used too fast, ramused is larger than ramtotal. Retrying...")
+            rampercent = psutil.virtual_memory()[2]
+            ramused = psutil.virtual_memory()[3]/1000000000
+            ramtotal1 = int(ramused)/int(rampercent)
+            print(ramtotal1)
+            ramtotal = ramtotal1*100
+            print(ramtotal)
+            winram1 = ramtotal/1000000000
+            print(winram1)
+            winram = winram1*1074000000
+            print(winram)
+        print('RAM memory % used:', rampercent)
+        print('RAM Used (GB):', ramused)
+        print('RAM Total (GB):', ramtotal)
+        print('Windows RAM Total (GB):', round(winram)) ## just in case of an error, round() is better as the memory is likely to be a whole number
+        print("\nWhy does windows identify RAM differently? this is because windows measures it in gigibytes not gigabytes, there is a difference")
+    
+    
+    elif a == "speed test" or a == "internet speed test" or a == "internet" or a == "speedtest" or a == "internet speedtest" or a == "ping":
+        print("Checking internet speed.....")
+        try:
+            import speedtest  
+        except:
+            os.system("pip install speedtest-cli")
+            import speedtest
+        st = speedtest.Speedtest()
+  
+        option = int(input('''What speed do you want to test:  
+  
+        1) Download Speed  
+  
+        2) Upload Speed  
+  
+        3) Ping 
+        ''' + "\n> "))
+  
+  
+        if option == 1 or option == "1":  
+            print("Checking download speed...")
+            download = st.download()
+            print(str(int(st.download())/1049000) + "MB")
+
+            print("Done.")
+  
+        elif option == 2 or option == "2": 
+            print("Checking upload speed...")
+            upload = st.upload()
+            print(str(int(st.upload())/1049000) + "MB")
+
+            print("Done.")
+  
+        elif option == 3 or option == "3":  
+            print("Pinging..")
+            servernames =[]  
+  
+            st.get_servers(servernames)  
+  
+            print(st.results.ping)
+            print("Done.")
+            if ping == 0 or ping == "0":
+                print("Hang on a minute! Your ping is 0! This may be because of an error!")
+  
+        else:
+  
+            print("Please enter the correct choice !") 
+    
+        
+    
+    
+    
     else:
+        if a == "update notes":
+            ## update notes
+            print("- Added in AutoBoot v2 for faster boot.")
+            print("- Added 'restart', 'shutdown', 'user', 'device', 'disk usage', 'ram', 'cpu' & 'speedtest' commands for easier access to basic commands that you would find on a normal OS.")
+            print("- Updated 'sudo' to 1.1")
+            print("- Updated 'Auto-Install-Module' for the program to run faster for the first time")
+            print("- Bug fixes for speedtest")
+            print("- Changed from GUI to console-based")
+            
+            
         if incorrectcmd == 1:
             import webbrowser
             webbrowser.open("https://www.google.com/search?q="+str(a)+"&oq=google&aqs=JOS")
