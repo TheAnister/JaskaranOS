@@ -29,4 +29,7 @@ For more python projects, be sure to visit us on our site: [JaskaranPython](http
 Here is our backup-site: [PyJaskaran](https://TheAnister.github.io)
 
 # Statistics
-This program is no easy feat. It took two weeks before the first update was ready to be released, with four hours a day being dedicated to finishing this program. Now that it has been completed, the main contributor (Jaskaran) is dedicating all his efforts into making this the best Python OS yet.
+This program is no easy feat. It took two weeks before the first update was ready to be released, with four hours a day being dedicated to finishing this program. Now that it has been completed, the main contributor (Jaskaran) dedicated all his efforts into making this the best Python OS yet.
+
+# R.I.P ?
+Jaskaran is retiring from Jaskaran Operating System, starting 24/02/2023. His last contribution was the JaskaranOS: Flex version (JOS5). This github will now rely soley on other contributors.
